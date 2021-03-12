@@ -6,6 +6,7 @@
 - pytorch
 - SimpleITK
 - vue
+- 设计模式
     
 
 ## Learning
@@ -13,6 +14,7 @@
 - pyqt5
 - ITK
 - VTK
+- 数据结构
 
 ## To learn
 - 。。。
