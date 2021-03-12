@@ -1,5 +1,5 @@
 # My Study Notes
-
+纯手敲的个人笔记
 ## Learned
 - numpy
 - pandas
@@ -15,3 +15,4 @@
 - VTK
 
 ## To learn
+- 。。。
