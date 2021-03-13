@@ -21,19 +21,59 @@
 - 链表反转
 
 ## TODO
-
+- 二叉树遍历（前中后递归）
+- 动态规划（fib爬楼梯）
+- 有序数组变平衡二叉树（log(n)）
+- LRU（146）
 - 冒泡排序
-- 递归
+- 二叉树共同祖先
+- 3数之和
+
+- 位运算
 - 堆排序
 - 归并排序
-- 二叉树
 - 红黑树
-- 动态规划
+
 - 图
 - ...
 
 
 ## 解题思路笔记
+
+### 递归
+```python
+
+def recursion(level, param1, param2, *args, **kwargs):
+    # 终止条件
+    if level>param1:
+        return 1
+    # 处理当前节点
+    process()
+    # 分解下探
+    ret1 = recursion(level+1, param1, *args, **kwargs)
+    ret2 = recursion(level+1, param2, *args, **kwargs)
+    # 组合处理
+    return ret1 + ret2 
+```
+### 二分法
+```python
+
+def binary_search(items, n):
+    high = len(items) - 1
+    low = 0
+    mid = low + (high -low) / 2
+    while low<=high:
+        if items[mid] == n:
+            return mid
+        elif items[mid] >= n:
+            low = mid +1
+        else:
+            high = mid -1
+    return -1
+
+```
+
+
 ### BFS广度优先搜索（图和树）
 
 ```python
@@ -64,5 +104,41 @@ def dfs(node, visited):
 ### 二叉搜索树前中后序遍历(递归)
 ```python
 
-
+def dfs(node):
+    if not node.left and not node.right:
+        return [node.val]
+    # 前序遍历
+    left = dfs(node.left)
+    # 中序遍历
+    right = dfs(node.right)
+    # 后续遍历
+    return left + [node.val] + right
 ```
+
+
+### Dynamic Programing
+- 递归，记忆化   
+- 状态定义（问题转化）  dp[i,j]   
+- 状态转移方程  dp[i] = best_of(dp[i-1], dp[i-2] ...)   
+- 最优子结构  减少重复计算   
+
+```python
+import numpy as np
+def dynamic(row,col):
+    # row,col = 10, 10
+    dp = np.zeros((row,col))
+    dp[0,0] = 0
+    dp[0,1] = 1
+    
+    for r in range(1,row):
+        for c in range(1, col):
+            dp[r,c]  = max(dp[r-1,c], dp[r,c-1])
+    return dp[row-1,col-1]  # 反向dp或者正向dp
+```
+
+
+### 位运算
+odd（奇数） x & 1 == 1 
+even（偶数） x & 1 == 0
+清除最低位的1(???) x = x & (x-1)
+ 
