@@ -19,6 +19,8 @@
 - 括号合法性（栈）
 - 数组去重
 - 链表反转
+- 深度优先搜索
+- 广度优先搜索
 
 ## TODO
 - 二叉树遍历（前中后递归）
@@ -41,6 +43,7 @@
 ## 解题思路笔记
 
 ### 递归
+eg. fib 三角路径和
 ```python
 
 def recursion(level, param1, param2, *args, **kwargs):
@@ -56,6 +59,8 @@ def recursion(level, param1, param2, *args, **kwargs):
     return ret1 + ret2 
 ```
 ### 二分法
+eg. power(x,n)
+
 ```python
 
 def binary_search(items, n):
