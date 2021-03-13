@@ -21,15 +21,17 @@
 - 链表反转
 - 深度优先搜索
 - 广度优先搜索
+- 动态规划（fib爬楼梯）
+- 二叉树遍历（前中后递归）
+
 
 ## TODO
-- 二叉树遍历（前中后递归）
-- 动态规划（fib爬楼梯）
 - 有序数组变平衡二叉树（log(n)）
 - LRU（146）
 - 冒泡排序
 - 二叉树共同祖先
 - 3数之和
+- 快慢指针
 
 - 位运算
 - 堆排序
@@ -108,16 +110,16 @@ def dfs(node, visited):
 ```
 ### 二叉搜索树前中后序遍历(递归)
 ```python
-
-def dfs(node):
-    if not node.left and not node.right:
-        return [node.val]
-    # 前序遍历
-    left = dfs(node.left)
-    # 中序遍历
-    right = dfs(node.right)
-    # 后续遍历
-    return left + [node.val] + right
+array = []
+def dfs(node, array):
+    if not node:
+        return
+    # array.append(node.val)  # 前序遍历 
+    dfs(node.left, array)
+    # array.append(node.val)  # 中序遍历 左根右
+    dfs(node.right, array)
+    # array.append(node.val)  # 后续遍历 左右根
+    return array
 ```
 
 
