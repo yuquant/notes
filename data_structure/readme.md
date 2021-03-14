@@ -24,6 +24,7 @@
 - 动态规划（fib爬楼梯， 三角最短路径和）
 - 二叉树遍历（前中后递归）
 - LRU（146）
+- 双指针（子序列） 
 
 
 ## TODO
@@ -69,7 +70,7 @@ eg. power(x,n)
 def binary_search(items, n):
     high = len(items) - 1
     low = 0
-    mid = low + (high -low) / 2
+    mid = low + (high -low) // 2
     while low<=high:
         if items[mid] == n:
             return mid
@@ -80,7 +81,19 @@ def binary_search(items, n):
     return -1
 
 ```
+### 双指针
+复杂度O(m+n)
+```python
+def two_pointer(s,t):
+    n, m = len(s), len(t)
+    i = j = 0
+    while i < n and j < m:
+        if s[i] == t[j]:
+            i += 1
+        j += 1
+    return i == n
 
+```
 
 ### BFS广度优先搜索（图和树）
 
