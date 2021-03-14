@@ -9,20 +9,34 @@ import unittest
 
 
 class Solution:
-    def is_valid(self, brackets: str) -> bool:
-        pairs = {'(': ')', '[': ']', '{': '}'}
+    def is_valid(self, code: str) -> bool:
+        cleaned_code = self._get_brackets(code)
+        ret = self._is_brackets_valid(cleaned_code)
+        return ret
+
+    def _is_brackets_valid(self, brackets: str):
+        if not brackets:
+            return True
         stack = []
+        bracket_dict = {'{': '}', '(': ')', '[': ']'}
         for s in brackets:
-            if s in pairs:
+            if s in bracket_dict:
                 stack.append(s)
             else:
-                if stack:
-                    left_bracket = stack.pop()
-                    if pairs[left_bracket] != s:
-                        return False
-                else:
+                if len(stack) == 0:
                     return False
-        return not bool(stack)
+                if s != bracket_dict[stack.pop()]:
+                    return False
+        ret = not stack
+        return ret
+
+    def _get_brackets(self, code: str):
+        brackets = set(['{', '}', '[', ']', '(', ')'])
+        ret = []
+        for s in code:
+            if s in brackets:
+                ret.append(s)
+        return ''.join(ret)
 
 
 class TestSolution(unittest.TestCase):
