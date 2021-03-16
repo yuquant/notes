@@ -8,6 +8,23 @@ Description :
 import unittest
 
 
+class Stack:
+    def __init__(self):
+        self._stack = []
+
+    def is_empty(self) -> bool:
+        return not bool(self._stack)
+
+    def pull(self):
+        return self._stack.pop()
+
+    def push(self, element):
+        self._stack.append(element)
+
+    def top(self):
+        return self._stack[-1]
+
+
 class Solution:
     def is_valid(self, code: str) -> bool:
         cleaned_code = self._get_brackets(code)
@@ -17,17 +34,17 @@ class Solution:
     def _is_brackets_valid(self, brackets: str):
         if not brackets:
             return True
-        stack = []
+        stack = Stack()
         bracket_dict = {'{': '}', '(': ')', '[': ']'}
         for s in brackets:
             if s in bracket_dict:
-                stack.append(s)
+                stack.push(s)
             else:
-                if len(stack) == 0:
+                if stack.is_empty():
                     return False
-                if s != bracket_dict[stack.pop()]:
+                if s != bracket_dict[stack.pull()]:
                     return False
-        ret = not stack
+        ret = stack.is_empty()
         return ret
 
     def _get_brackets(self, code: str):

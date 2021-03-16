@@ -16,15 +16,27 @@ image_node = loadVolume(image_path)
 label = sitk.ReadImage(label_path)
 tmp_node = sitkUtils.PushVolumeToSlicer(sitkimage=label, targetNode=None,name='tmp',className='vtkMRMLLabelMapVolumeNode')
 seg_node = slicer.mrmlScene.AddNewNodeByClass('vtkMRMLSegmentationNode')
+
+# seg_node_name = 'labels'
+# seg_node = slicer.mrmlScene.AddNewNodeByClass('vtkMRMLSegmentationNode', seg_node_name)
 seg_node.SetName('seg')
+seg_node.CreateDefaultDisplayNodes()
+seg_node.GetSegmentation().AddEmptySegment()
+# 如果不添加上边这两行，就会发生下边的现象（如果不经过标注，也会导致标注无法修改）
 # 在现有标签的基础上叠加
 # 由于缺少reference图像，似乎导入的像素会按照最小外接矩形切割，导致影响标注（区域外无法标注）
 slicer.modules.segmentations.logic().ImportLabelmapToSegmentationNode(tmp_node, seg_node)
+# slicer.modules.segmentations.logic().LoadSegmentationFromFile(label_path, seg_node)
 slicer.mrmlScene.RemoveNode(tmp_node)
+
+# 删除之前添加的空白标签
+segmentation = seg_node.GetSegmentation()
+segmentation.RemoveSegment(segmentation.GetNthSegmentID(0))
 
 # 导出和保存分割标签
 # https://www.slicer.org/wiki/Documentation/Nightly/ScriptRepository#Export_labelmap_node_from_segmentation_node
-segmentation = seg_node.GetSegmentation()
+
+
 seg_ids = [segmentation.GetNthSegmentID(i) for i in range(2)]
 tmpNode = slicer.mrmlScene.AddNewNodeByClass('vtkMRMLLabelMapVolumeNode')
 segmentIds = vtk.vtkStringArray()
