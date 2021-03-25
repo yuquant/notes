@@ -26,6 +26,7 @@ seg_node.SetName('seg')
 # segmentationNode = self.scriptedEffect.parameterSetNode().GetSegmentationNode()
 # 在现有标签的基础上叠加
 # 由于缺少reference图像，似乎导入的像素会按照最小外接矩形切割，导致影响标注（区域外无法标注）
+# 目前存在的一个问题是标签的值的种类决定了标签数量，万一一个标签为空，则会导致所有顺序错位
 slicer.modules.segmentations.logic().ImportLabelmapToSegmentationNode(tmp_node, seg_node)
 # slicer.modules.segmentations.logic().LoadSegmentationFromFile(label_path, seg_node)
 slicer.mrmlScene.RemoveNode(tmp_node)
@@ -46,6 +47,7 @@ for sid in seg_ids:
 
 segmentationNode, segmentIds, labelmapVolumeNode, referenceVolumeNode = seg_node, segmentIds, tmpNode, getNode('images')
 # 导出到指定的labelmapVolumeNode节点，重叠的标签后边的会覆盖前边的，并且按顺序分别赋值1,2,3,4...
+
 slicer.vtkSlicerSegmentationsModuleLogic.ExportSegmentsToLabelmapNode(segmentationNode, segmentIds, labelmapVolumeNode, referenceVolumeNode)
 saveNode(tmpNode, 'D:/temp/labels_prostate.nii.gz')
 # 在3D视图显示
